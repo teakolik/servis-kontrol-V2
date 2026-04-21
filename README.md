@@ -2,33 +2,9 @@
 
 Sistemdeki servisleri izleyen, duran servisi otomatik başlatan ve sizi anında haberdar eden bash script.
 
-[![Shell](https://img.shields.io/badge/Shell-Bash-green)](https://www.gnu.org/software/bash/)
-[![systemd](https://img.shields.io/badge/init-systemd-blue)](https://systemd.io/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
----
-
 ## Ne Yapar?
 
 Crontab üzerinde her dakika çalışır. `SERVICES` dizisindeki her servis için `systemctl is-active` ile durum kontrolü yapar. Servis durmuşsa `systemctl start` ile başlatır, sonucu size mail ve/veya Slack üzerinden bildirir. Servis bir türlü başlamıyorsa ayrı bir "müdahale gerekli" bildirimi gönderir.
-
----
-
-## v1 → v2 Ne Değişti?
-
-| Özellik | v1 | v2 |
-|---|---|---|
-| **Servis tespiti** | `ps \| grep` (güvenilmez) | `systemctl is-active` ✅ |
-| **Başlatma** | `/sbin/service` (SysV) | `systemctl start` ✅ |
-| **Çoklu servis** | Yok, tek servis | `SERVICES` dizisi ✅ |
-| **Log** | Yok | `/var/log/servis_kontrol.log` ✅ |
-| **Lock file** | Yok | Çakışan cron önleme ✅ |
-| **Retry sayacı** | Yok | N denemeden sonra "patladı" bildirimi ✅ |
-| **Slack** | Yok | Webhook desteği ✅ |
-| **Dry-run** | Yok | `--dry-run` test modu ✅ |
-| **SIEM** | Yok | `--json-log` JSON çıktı ✅ |
-
----
 
 ## Gereksinimler
 
@@ -37,10 +13,7 @@ Crontab üzerinde her dakika çalışır. `SERVICES` dizisindeki her servis içi
 - `mail` komutu — mail bildirimi için opsiyonel (`mailutils` veya `postfix`)
 - `curl` — Slack bildirimi için opsiyonel
 
----
-
 ## Kurulum
-
 ### 1. Dosyayı Kopyalayın
 
 ```bash
@@ -90,7 +63,6 @@ crontab -e
 * * * * * /etc/servis_kontrol/servis_kontrol.sh >> /dev/null 2>&1
 ```
 
----
 
 ## Komut Satırı Parametreleri
 
@@ -108,8 +80,6 @@ crontab -e
 ./servis_kontrol.sh --dry-run --json-log
 ```
 
----
-
 ## Log Çıktısı
 
 **Normal format:**
@@ -126,8 +96,6 @@ crontab -e
 {"timestamp":"2026-04-22T15:00:01+0300","severity":"INFO","host":"web01","service":"mysql","message":"Çalışıyor ✓"}
 {"timestamp":"2026-04-22T15:01:01+0300","severity":"WARN","host":"web01","service":"mysql","message":"Servis durdu, başlatılıyor..."}
 ```
-
----
 
 ## Bildirimler
 
@@ -149,10 +117,10 @@ yum install mailx
 2. Webhook URL'yi `SLACK_WEBHOOK` değerine yapıştırın
 
 Servis başarıyla restart edildiğinde:
-> 🖥 **web01** — ✅ mysql yeniden başlatıldı
+> 🖥 **web01** — mysql yeniden başlatıldı
 
 Servis başlatılamadığında:
-> 🖥 **web01** — 🚨 mysql BAŞLATILEMIYOR — MÜDAHALE GEREKLİ
+> 🖥 **web01** —  mysql BAŞLATILEMIYOR — MÜDAHALE GEREKLİ
 
 ---
 
@@ -231,6 +199,5 @@ cp servis_kontrol.logrotate /etc/logrotate.d/servis_kontrol
 ## Yazar
 
 **Hamza Şamlıoğlu**  
-Managing Partner, [Privia Security](https://priviasecurity.com)  
 GitHub: [@teakolik](https://github.com/teakolik)  
 LinkedIn: [linkedin.com/in/teakolik](https://www.linkedin.com/in/teakolik/)
