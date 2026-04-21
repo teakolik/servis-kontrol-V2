@@ -117,10 +117,10 @@ yum install mailx
 2. Webhook URL'yi `SLACK_WEBHOOK` değerine yapıştırın
 
 Servis başarıyla restart edildiğinde:
-> 🖥 **web01** — mysql yeniden başlatıldı
+> **web01** — mysql yeniden başlatıldı
 
 Servis başlatılamadığında:
-> 🖥 **web01** —  mysql BAŞLATILEMIYOR — MÜDAHALE GEREKLİ
+> **web01** —  mysql BAŞLATILEMIYOR — MÜDAHALE GEREKLİ
 
 ---
 
